@@ -1,8 +1,8 @@
-package edu.isu.cs.cs3308.structures.impl;
+package edu.isu.cs.cs3308.structures;
 
 import java.util.Iterator;
 
-public class Set implements edu.isu.cs.cs3308.structures.Set
+public class HashSet implements Set
 {
     @Override
     public void add(Object e)
@@ -35,19 +35,19 @@ public class Set implements edu.isu.cs.cs3308.structures.Set
     }
 
     @Override
-    public void addAll(edu.isu.cs.cs3308.structures.Set s)
+    public void addAll(Set s)
     {
 
     }
 
     @Override
-    public void retainAll(edu.isu.cs.cs3308.structures.Set s)
+    public void retainAll(Set s)
     {
 
     }
 
     @Override
-    public void removeAll(edu.isu.cs.cs3308.structures.Set s)
+    public void removeAll(Set s)
     {
 
     }
