@@ -1,25 +1,66 @@
 package edu.isu.cs.cs3308.structures;
-
+import edu.isu.cs.cs3308.structures.impl.SinglyLinkedList;
 import java.util.Iterator;
 
-public class HashSet implements Set
+
+//I used this website so I could make sure I was following similar logic
+//https://www.javamadesoeasy.com/2015/02/set-custom-implementation.html
+
+public class HashSet<E> implements Set<E>
 {
-    @Override
-    public void add(Object e)
-    {
+    private int maxSize;
+    private int size;
+    private SinglyLinkedList<E>[] buckets;
 
+    public HashSet(int max)
+    {
+        buckets = new SinglyLinkedList[max];
+        maxSize = max;
+    }
+
+    public void put(int key, E element)
+    {
+        if(contains(element) == false)
+        {
+            if(buckets[key % maxSize] == null)
+            {
+                buckets[key % maxSize] = new SinglyLinkedList<>();
+            }
+            buckets[hash(element) % maxSize].addLast(element);
+            size++;
+        }
+    }
+
+    private int hash(E e)
+    {
+        return Math.abs(e.hashCode());
     }
 
     @Override
-    public void remove(Object e)
+    public void add(E e)
     {
+        put(hash(e), e);
+    }
 
+
+    @Override
+    public void remove(E e)
+    {
+        if(contains(e) == true)
+        {
+            buckets[hash(e) % maxSize].remove(e);
+            size--;
+        }
     }
 
     @Override
-    public boolean contains(Object e)
+    public boolean contains(E e)
     {
-        return false;
+        if(buckets[hash(e) % maxSize] == null)
+        {
+            return false;
+        }
+        return buckets[hash(e) % maxSize].isIn(e);
     }
 
     @Override
