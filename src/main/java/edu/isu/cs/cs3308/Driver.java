@@ -10,7 +10,7 @@ public class Driver
 
         SpellCheck checker = new SpellCheck(file);
 
-        System.out.println("Type something to spell check or type quit to quit: \n");
+        System.out.println("Type something to spell check or type quit to quit:");
         Scanner s = new Scanner(System.in);
 
         while(s.hasNextLine())

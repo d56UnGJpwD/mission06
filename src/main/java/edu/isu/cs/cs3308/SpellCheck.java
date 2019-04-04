@@ -43,6 +43,7 @@ public class SpellCheck implements SpellChecker
         return size;
     }
 
+    //fill reads the file and adds it to the hashset called lexicon
     public void fill(int maxSize)
     {
         BufferedReader br;
@@ -100,7 +101,8 @@ public class SpellCheck implements SpellChecker
                 }
 
             }
-
+            // forgot to handle possible fixes from 1 letter previous example: saad wasnt showing sad
+            // fixed now
             for(int i = 0; i < s.length(); i++)
             {
                 String word = s.substring(0, i) + s.substring(i + 1);
@@ -168,16 +170,21 @@ public class SpellCheck implements SpellChecker
             else
             {
                 System.out.print("Did you mean: ");
+                int k = 0;
                 for(String str : list)
                 {
-                    System.out.print(str+", ");
+                    if(k < 5)
+                    {
+                        System.out.print(str+", ");
+                        k++;
+                    }
                 }
                 System.out.print("?\n");
             }
         }
         else
         {
-            System.out.println("Correct spelling\n");
+            System.out.println("Correct spelling");
         }
 
         return list;
