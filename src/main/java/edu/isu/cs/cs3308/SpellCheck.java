@@ -170,7 +170,7 @@ public class SpellCheck implements SpellChecker
 
             else
             {
-                System.out.println("Misspelled Word: " + s);
+                System.out.println("\nMisspelled Word: " + s);
                 System.out.print("Did you mean: ");
                 int k = 0;
                 for(String str : list)
