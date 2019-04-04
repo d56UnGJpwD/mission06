@@ -63,16 +63,18 @@ public class SpellCheck implements SpellChecker
         }
     }
 
+    //I used http://www.asciitable.com/ for checking my ascii
+
     @Override
     public List<String> check(String s)
     {
         List<String> list = new ArrayList<>();
         s = s.toLowerCase();
-        System.out.println(s + "... ");
         if(lexicon.contains(s) == false)
         {
             for(int i = 0; i < s.length(); i++)
             {
+                //start at letter a and end right before { (z)
                 for(char j = 97; j < 123; j++)
                 {
                     char[] letters = s.toCharArray();
@@ -83,9 +85,12 @@ public class SpellCheck implements SpellChecker
                         list.add(word);
                     }
                 }
+                //the position apostrophe would be in
+                //this is only checking for words like don't, can't nothing crazy like Kaajh'Kaalbh
                 if(i == s.length() - 2)
                 {
                     char[] letters = s.toCharArray();
+                    //apostrophe is 39
                     letters[i] = 39;
                     String word = new String(letters);
                     if(lexicon.contains(word) == true && list.contains(word) == false)
@@ -95,8 +100,19 @@ public class SpellCheck implements SpellChecker
                 }
 
             }
+
+            for(int i = 0; i < s.length(); i++)
+            {
+                String word = s.substring(0, i) + s.substring(i + 1);
+                if(lexicon.contains(word) == true && list.contains(word) == false)
+                {
+                    list.add(word);
+                }
+            }
+
             for(int i = 0; i < s.length() + 1; i++)
             {
+                //checks with one letter added from a - z
                 for(char j = 97; j < 123; j++)
                 {
                     String word = s.substring(0, i) + j + s.substring(i);
@@ -108,6 +124,7 @@ public class SpellCheck implements SpellChecker
 
                 if(i == s.length() - 1)
                 {
+                    //cast ascii ' as a char
                     String word = s.substring(0,i) + (char)39 + s.substring(i);
                     if(lexicon.contains(word) == true && list.contains(word) == false)
                     {
@@ -150,17 +167,17 @@ public class SpellCheck implements SpellChecker
 
             else
             {
-                System.out.println("Did you mean ");
+                System.out.print("Did you mean: ");
                 for(String str : list)
                 {
-                    System.out.println(str+", ");
+                    System.out.print(str+", ");
                 }
-                System.out.println("?\n");
+                System.out.print("?\n");
             }
         }
         else
         {
-            System.out.println("Found/n");
+            System.out.println("Correct spelling\n");
         }
 
         return list;
