@@ -17,10 +17,10 @@ public class SpellCheck implements SpellChecker
     {
         this.file = file;
         int lines = getNumLines();
-        System.out.println("Num of lines: \n" + lines);
+        //System.out.println("Num of lines: \n" + lines);
 
         lexicon = new HashSet<>(lines);
-        fill(lines);
+        fill();
     }
 
     public int getNumLines()
@@ -44,7 +44,7 @@ public class SpellCheck implements SpellChecker
     }
 
     //fill reads the file and adds it to the hashset called lexicon
-    public void fill(int maxSize)
+    public void fill()
     {
         BufferedReader br;
         try
@@ -69,6 +69,7 @@ public class SpellCheck implements SpellChecker
     @Override
     public List<String> check(String s)
     {
+        boolean noMistakes = true;
         List<String> list = new ArrayList<>();
         s = s.toLowerCase();
         if(lexicon.contains(s) == false)
@@ -123,7 +124,7 @@ public class SpellCheck implements SpellChecker
                         list.add(word);
                     }
                 }
-
+                // '
                 if(i == s.length() - 1)
                 {
                     //cast ascii ' as a char
@@ -148,7 +149,7 @@ public class SpellCheck implements SpellChecker
                     list.add(word);
                 }
             }
-
+            //capitalization handling
             if(lexicon.contains(s) == true)
             {
                 String word = s.substring(0,1).toUpperCase()+s.substring(1);
@@ -157,7 +158,7 @@ public class SpellCheck implements SpellChecker
                     list.add(word);
                 }
             }
-
+            //uppercase handling
             if(lexicon.contains(s) == true)
             {
                 String word = s.toUpperCase();
@@ -169,20 +170,28 @@ public class SpellCheck implements SpellChecker
 
             else
             {
+                System.out.println("Misspelled Word: " + s);
                 System.out.print("Did you mean: ");
                 int k = 0;
                 for(String str : list)
                 {
-                    if(k < 5)
+                    if(k < 4)
                     {
                         System.out.print(str+", ");
                         k++;
                     }
+                    if(k > 4 && k < 5)
+                    {
+                        System.out.print(str);
+                        k++;
+                    }
                 }
                 System.out.print("?\n");
+                noMistakes = false;
             }
         }
-        else
+        //my no mistakes boolean needs to have a counter with it so it only prints once.
+        if(noMistakes == true)
         {
             System.out.println("Correct spelling");
         }
